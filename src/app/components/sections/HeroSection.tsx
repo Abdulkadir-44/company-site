@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import LoadingScreen from '../ui/LoadingSecreen';
 import { motion } from "framer-motion"
+import Link from 'next/link';
 
 export default function HeroSection() {
   const [isImageLoading, setIsImageLoading] = useState(true);
@@ -12,7 +13,7 @@ export default function HeroSection() {
     <>
       {isImageLoading && <LoadingScreen />}
 
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden ">
+      <section id='home' className="relative min-h-screen flex items-center justify-center overflow-hidden ">
         <Image
           src="/bg.jpeg"
           alt="Hero Arkaplanı"
@@ -34,7 +35,7 @@ export default function HeroSection() {
             </span>{" "}
             İnşa Edelim
           </motion.h1>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -44,14 +45,18 @@ export default function HeroSection() {
             <p className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl mx-auto text-gray-200 leading-relaxed px-2 sm:px-0">
               Modern teknolojilerle güçlü ve etkili dijital çözümler üretiyoruz. Web sitenizi, uygulamanızı veya özel yazılımınızı hayata geçiriyoruz.
             </p>
-            
+
             <div className='flex flex-col sm:flex-row items-center gap-3 sm:gap-4 md:gap-5 justify-center px-4 sm:px-0'>
-              <button className="w-full sm:w-auto select-none border border-white/30 bg-white/10 backdrop-blur-lg px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 cursor-pointer rounded-2xl sm:rounded-3xl text-white font-semibold shadow-lg hover:bg-white/70 hover:text-black hover:border-white/50 transition-all duration-300 text-sm sm:text-base min-w-[160px] sm:min-w-[180px] md:min-w-[200px]">
+              <Link
+                href="/projects"
+                className="w-full sm:w-auto select-none border border-white/30 bg-white/10 backdrop-blur-lg px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 cursor-pointer rounded-2xl sm:rounded-3xl text-white font-semibold shadow-lg hover:bg-white/70 hover:text-black hover:border-white/50 transition-all duration-300 text-sm sm:text-base min-w-[160px] sm:min-w-[180px] md:min-w-[200px]">
                 Projelerimizi İncele
-              </button>
-              <button className="w-full sm:w-auto select-none border border-white/30 bg-white/10 backdrop-blur-lg px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 cursor-pointer rounded-2xl sm:rounded-3xl text-white font-semibold shadow-lg hover:bg-white/70 hover:text-black hover:border-white/50 transition-all duration-300 text-sm sm:text-base min-w-[160px] sm:min-w-[180px] md:min-w-[200px]">
+              </Link>
+              <Link
+                href="#contact"
+                className="w-full sm:w-auto select-none border border-white/30 bg-white/10 backdrop-blur-lg px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 cursor-pointer rounded-2xl sm:rounded-3xl text-white font-semibold shadow-lg hover:bg-white/70 hover:text-black hover:border-white/50 transition-all duration-300 text-sm sm:text-base min-w-[160px] sm:min-w-[180px] md:min-w-[200px]">
                 İletişime Geç
-              </button>
+              </Link>
             </div>
           </motion.div>
         </div>

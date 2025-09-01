@@ -13,7 +13,7 @@ export default function ServicesSection() {
     const isHeaderInView = useInView(headerRef, { once: true });
 
     return (
-        <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-gray-100 relative overflow-hidden">
+        <section id="services" className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-gray-100 relative overflow-hidden">
             {/* Background Elements */}
             <div className="absolute top-0 left-0 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
             <div className="absolute top-0 right-0 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>

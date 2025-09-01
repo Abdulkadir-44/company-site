@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${newsreader.variable} ${poppins.variable}`}
+      className={`${newsreader.variable} ${poppins.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <body className={`${newsreader.className}`}>

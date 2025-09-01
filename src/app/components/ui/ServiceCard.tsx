@@ -15,7 +15,7 @@ function ServiceCard({ service, index }: { service: typeof servicesData[0]; inde
             ref={ref}
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 80 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.2 }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.15 }}
             className="group"
         >
             <div className={`relative bg-white rounded-3xl p-8 lg:p-10 shadow-lg hover:shadow-2xl transition-all duration-500 border ${service.borderColor} hover:border-transparent overflow-hidden`}>
@@ -79,19 +79,16 @@ function ServiceCard({ service, index }: { service: typeof servicesData[0]; inde
                         </div>
 
                         {/* CTA Button */}
-                        <Link
-                            href="/"
-                            
-                        >
+                        
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 className={`group/btn inline-flex items-center cursor-pointer space-x-2 bg-gradient-to-r ${service.gradient} text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300`}
                             >
-                                <span>Teklif Al</span>
+                                <Link href="#contact">Teklif Al</Link>
                                 <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
                             </motion.button>
-                        </Link>
+                        
                     </div>
 
                     {/* Image Side */}

@@ -97,35 +97,35 @@ export default function Header() {
 
                         {/* Logo */}
                         <div className="flex-shrink-0 select-none">
-                            <Link href="/" className="text-gray-100 text-lg sm:text-xl md:text-2xl font-bold tracking-wider flex justify-center items-center">
+                            <Link href="#home" className="text-gray-100 text-lg sm:text-xl md:text-2xl font-bold tracking-wider flex justify-center items-center">
                                 NEBA<span className='text-xl sm:text-2xl md:text-3xl text-purple-800'>SOFTWARE</span>
                             </Link>
                         </div>
 
                         {/* Desktop Navigation */}
                         <nav className="hidden lg:flex lg:items-center lg:space-x-6 xl:space-x-8">
-                            <Link href="/services" className={navLinkClasses}>
+                            <Link href="#services" className={navLinkClasses}>
                                 Hizmetler
                             </Link>
                             <Link href="/projects" className={navLinkClasses}>
                                 Projeler
                             </Link>
-                            <Link href="/about" className={navLinkClasses}>
+                            <Link href="#about" className={navLinkClasses}>
                                 Hakkımızda
                             </Link>
-                            <Link href="/contact" className={navLinkClasses}>
+                            <Link href="#contact" className={navLinkClasses}>
                                 İletişim
                             </Link>
                         </nav>
 
                         {/* Desktop CTA Button */}
                         <div className="hidden lg:block">
-                            <a
+                            <Link
                                 href="#contact"
                                 className="border border-white/30 bg-white/10 backdrop-blur-lg px-4 xl:px-6 py-2 xl:py-2.5 rounded-2xl xl:rounded-3xl text-white font-semibold shadow-lg hover:bg-white/20 hover:border-white/50 transition-all duration-300 text-sm xl:text-base"
                             >
                                 Teklif Al
-                            </a>
+                            </Link>
                         </div>
 
                         {/* Mobile Menu Button */}
@@ -190,7 +190,7 @@ export default function Header() {
                                     transition={{ delay: 0.1, duration: 0.3 }}
                                 >
                                     <Link 
-                                        href="/services" 
+                                        href="#services" 
                                         className={mobileNavLinkClasses}
                                         onClick={toggleMobileMenu}
                                     >
@@ -218,7 +218,7 @@ export default function Header() {
                                     transition={{ delay: 0.2, duration: 0.3 }}
                                 >
                                     <Link 
-                                        href="/services" 
+                                        href="#services" 
                                         className={mobileNavLinkClasses}
                                         onClick={toggleMobileMenu}
                                     >
@@ -232,7 +232,7 @@ export default function Header() {
                                     transition={{ delay: 0.25, duration: 0.3 }}
                                 >
                                     <Link 
-                                        href="/about" 
+                                        href="#about" 
                                         className={mobileNavLinkClasses}
                                         onClick={toggleMobileMenu}
                                     >
@@ -246,7 +246,7 @@ export default function Header() {
                                     transition={{ delay: 0.3, duration: 0.3 }}
                                 >
                                     <Link 
-                                        href="/contact" 
+                                        href="#contact" 
                                         className={mobileNavLinkClasses}
                                         onClick={toggleMobileMenu}
                                     >
@@ -262,13 +262,13 @@ export default function Header() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.35, duration: 0.3 }}
                             >
-                                <a
+                                <Link
                                     href="#contact"
                                     className="w-full border border-purple-500/50 bg-purple-600/20 backdrop-blur-lg px-6 py-3 rounded-2xl text-white font-semibold shadow-lg hover:bg-purple-600/30 hover:border-purple-400/60 transition-all duration-300 block text-center"
                                     onClick={toggleMobileMenu}
                                 >
                                     Teklif Al
-                                </a>
+                                </Link>
                             </motion.div>
                         </motion.div>
                     </>

@@ -14,7 +14,7 @@ export const servicesData = [
             "Content Management Sistemleri",
             "API Entegrasyonu ve Geliştirme"
         ],
-        imageUrl: "/test.jpg",
+        imageUrl: "/servicesSectionPhotos/test.jpg",
         icon: Code,
         gradient: "from-purple-500 to-pink-500",
         bgColor: "bg-purple-50",
@@ -33,7 +33,7 @@ export const servicesData = [
             "Otomatik Güncelleme Sistemi",
             "Özelleştirilebilir Arayüz"
         ],
-        imageUrl: "/desktop.jpg",
+        imageUrl: "/servicesSectionPhotos/desktop.jpg",
         icon: Monitor,
         gradient: "from-blue-500 to-cyan-500",
         bgColor: "bg-blue-50",
@@ -53,7 +53,7 @@ export const servicesData = [
             "Otomatik Backup ve Recovery",
             "Load Balancing ve Auto Scaling"
         ],
-        imageUrl: "/cloud.jpg",
+        imageUrl: "/servicesSectionPhotos/cloud.jpg",
         icon: Cloud,
         gradient: "from-green-500 to-emerald-500",
         bgColor: "bg-green-50",
