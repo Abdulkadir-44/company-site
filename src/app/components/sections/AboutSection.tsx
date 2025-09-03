@@ -177,7 +177,7 @@ export default function AboutSection() {
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: isExpertiseInView ? 1 : 0, y: isExpertiseInView ? 0 : 50 }}
                     transition={{ duration: 0.8, delay: 0.1 }}
-                    className="mb-16 px-4 sm:px-6 lg:px-8"
+                    className="mb-16"
                 >
                     <div className="text-center mb-16">
                         <h3 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-4">Uzmanlık Alanlarımız</h3>

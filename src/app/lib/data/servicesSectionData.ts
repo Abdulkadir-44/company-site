@@ -15,6 +15,7 @@ export const servicesData = [
             "API Entegrasyonu ve Geliştirme"
         ],
         imageUrl: "/servicesSectionPhotos/test.jpg",
+        mobileImageUrl: "/servicesSectionPhotos/firstCard.jpg",
         icon: Code,
         gradient: "from-purple-500 to-pink-500",
         bgColor: "bg-purple-50",

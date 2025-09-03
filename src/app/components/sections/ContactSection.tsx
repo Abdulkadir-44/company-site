@@ -2,15 +2,18 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Send, Mail, Phone, MessageSquare, User, Target, CheckCircle, Clock } from "lucide-react";
+import { Send, Mail, Phone, CheckCircle, Clock } from "lucide-react";
 import { FormData } from "@/app/types/types";
-import { subjectOptions, floatingElementsData, whyNebaSoftware } from "@/app/lib/data/contactSectionData";
+import { floatingElementsData, whyNebaSoftware, formFields } from "@/app/lib/data/contactSectionData";
 import { useIntersectionObserver } from "@/app/hooks/aboutSectionHooks";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import FormInput from "@/app/components/ui/Input"
 
 export default function ContactSection() {
     const [formRef, isFormInView] = useIntersectionObserver<HTMLDivElement>();
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+
+    const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const [responseMessage, setResponseMessage] = useState('');
 
     const [formData, setFormData] = useState<FormData>({
         fullName: "",
@@ -20,6 +23,18 @@ export default function ContactSection() {
         message: ""
     });
 
+    const { executeRecaptcha } = useGoogleReCaptcha();
+
+    const isFormValid = () => {
+        // Required alanları kontrol et
+        const requiredFields = formFields.filter(field => field.required);
+
+        return requiredFields.every(field => {
+            const value = formData[field.name];
+            return value && value.trim().length > 0;
+        });
+    };
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -27,29 +42,76 @@ export default function ContactSection() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsLoading(true);
+        // console.log("--- 1. Form Submission Started ---"); // LOG: Fonksiyonun başladığını teyit et
+        setFormStatus('loading');
+        setResponseMessage('');
 
-        // Simulate form submission
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        if (!executeRecaptcha) {
+            // console.error("❌ ERROR: executeRecaptcha function is not available. reCAPTCHA script might not have loaded.");
+            setFormStatus('error');
+            setResponseMessage("Security validation failed to load. Please refresh the page.");
+            return;
+        }
 
-        setIsLoading(false);
-        setIsSubmitted(true);
+        try {
+            // console.log("... 2. Requesting reCAPTCHA token ..."); // LOG: Token isteme adımına gelindiğini gör
+            const token = await executeRecaptcha('contactForm');
+            // console.log("✅ 3. reCAPTCHA Token received:", token.substring(0, 30) + '...'); // LOG: Alınan token'ı (kısaltılmış olarak) konsolda gör
 
-        // Reset form after 3 seconds
-        setTimeout(() => {
-            setIsSubmitted(false);
-            setFormData({
-                fullName: "",
-                email: "",
-                phone: "",
-                subject: "",
-                message: ""
+            const payload = { ...formData, token };
+            // console.log("➡️ 4. Sending this payload to API:", payload); // LOG: Backend'e gönderilen verinin tamamını kontrol et
+
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
             });
-        }, 3000);
+
+            // console.log("⬅️ 5. API Response Received. Status:", res.status); // LOG: API'den gelen cevabın durum kodunu gör (201, 400, 500 vb.)
+
+            if (res.ok) {
+                // const successData = await res.json();
+                // console.log("✅ 6. API Success Data:", successData); // LOG: Başarılı olduğunda API'den dönen veriyi gör
+                setFormStatus('success');
+                setResponseMessage('Your message has been received!');
+
+                if (formRef.current) {
+                    formRef.current.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start' // veya 'center'
+                    });
+                }
+
+                setTimeout(() => {
+                    setFormStatus('idle');
+                    setFormData({
+                        fullName: "", email: "", phone: "", subject: "", message: ""
+                    });
+                }, 5000);
+            } else {
+                // If response is not OK, it might not be JSON. We try to parse it, but catch if it fails.
+                try {
+                    const errorData = await res.json();
+                    // console.error("❌ 6. API Error Data (JSON):", errorData); // LOG: Hata durumunda API'den dönen JSON verisini gör
+                    setResponseMessage(errorData.message || 'An error occurred. Please try again.');
+                } catch (jsonError) {
+                    // const errorText = await res.text();
+                    // console.error("❌ 6. API Error Data (Not JSON):", errorText); // LOG: Cevap JSON değilse, ham metin olarak gör (HTML hata sayfası gibi)
+                    setResponseMessage('A server error occurred. Please try again later.');
+                }
+                setFormStatus('error');
+            }
+        } catch (error) {
+            console.error("❌ FATAL: A network error or unexpected issue occurred in handleSubmit.", error); // LOG: Fetch'in kendisi başarısız olursa (network hatası gibi) bu hata tetiklenir
+            setFormStatus('error');
+            setResponseMessage('Could not connect to the server. Please check your connection.');
+        }
     };
 
     return (
-        <section id="contact" className="px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-purple-50 py-16 relative overflow-hidden">
+        <section id="contact" className="sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-purple-50 py-16 relative overflow-hidden">
 
             {/* Floating Decorative Elements */}
             {floatingElementsData.map((dot, index) => (
@@ -66,7 +128,6 @@ export default function ContactSection() {
                 <motion.div
                     initial={{ opacity: 0, y: -50 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    // viewport={{ once: true }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="text-center mb-16 lg:mb-20"
                 >
@@ -153,11 +214,10 @@ export default function ContactSection() {
                         <motion.div
                             initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: false }}
+                            viewport={{ once: true }}
                             transition={{ duration: 0.8, delay: 0.4 }}
                             className="relative rounded-2xl overflow-hidden shadow-xl"
                         >
-
                             <iframe
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10143.142167226959!2d44.0754772163363!3d39.54623719871494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4014b73c85781721%3A0x33b8e2d8768b47c5!2zw4dpZnRlcMSxbmFyLCBCw7x5w7xrIEHEn3LEsSBDZC4gTm86NjAsIDA0NDAwIERvxJ91YmF5YXrEsXQvQcSfcsSx!5e1!3m2!1str!2str!4v1756734042604!5m2!1str!2str"
                                 width="100%"
@@ -172,10 +232,6 @@ export default function ContactSection() {
                                 <p>Ağrı, Türkiye</p>
                             </div>
                         </motion.div>
-
-                        {/* <div>
-                            bu kısma resim gelecek ekranın tamamını kaplayan
-                        </div> */}
                     </div>
 
                     {/* Right Side - Form */}
@@ -193,7 +249,7 @@ export default function ContactSection() {
                             <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-green-200 to-purple-200 rounded-full opacity-20 blur-2xl"></div>
 
                             <div className="relative z-10">
-                                {!isSubmitted ? (
+                                {formStatus !== 'success' ? (
                                     <>
                                         <div className="text-center mb-8">
                                             <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -205,133 +261,25 @@ export default function ContactSection() {
 
                                         <form onSubmit={handleSubmit} className="space-y-6">
 
-                                            {/* Full Name - Required */}
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 20 }}
-                                                animate={{ opacity: isFormInView ? 1 : 0, y: isFormInView ? 0 : 20 }}
-                                                transition={{ duration: 0.6, delay: 0.5 }}
-                                            >
-                                                <label htmlFor="fullName" className="block text-sm font-semibold text-gray-700 mb-3">
-                                                    Ad Soyad <span className="text-red-500">*</span>
-                                                </label>
-                                                <div className="relative">
-                                                    <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                                    <input
-                                                        type="text"
-                                                        id="fullName"
-                                                        name="fullName"
-                                                        value={formData.fullName}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                        className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-2xl focus:ring-0 focus:border-purple-400 focus:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm"
-                                                        placeholder="Adınız ve soyadınız"
-                                                    />
-                                                </div>
-                                            </motion.div>
-
-                                            {/* Email - Required */}
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 20 }}
-                                                animate={{ opacity: isFormInView ? 1 : 0, y: isFormInView ? 0 : 20 }}
-                                                transition={{ duration: 0.6, delay: 0.6 }}
-                                            >
-                                                <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-3">
-                                                    E-posta Adresi <span className="text-red-500">*</span>
-                                                </label>
-                                                <div className="relative">
-                                                    <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                                    <input
-                                                        type="email"
-                                                        id="email"
-                                                        name="email"
-                                                        value={formData.email}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                        className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-2xl focus:ring-0 focus:border-purple-400 focus:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm"
-                                                        placeholder="ornek@email.com"
-                                                    />
-                                                </div>
-                                            </motion.div>
-
-                                            {/* Phone - Optional */}
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 20 }}
-                                                animate={{ opacity: isFormInView ? 1 : 0, y: isFormInView ? 0 : 20 }}
-                                                transition={{ duration: 0.6, delay: 0.7 }}
-                                            >
-                                                <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-3">
-                                                    Telefon Numarası <span className="text-gray-400 text-xs">(İsteğe Bağlı)</span>
-                                                </label>
-                                                <div className="relative">
-                                                    <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                                    <input
-                                                        type="tel"
-                                                        id="phone"
-                                                        name="phone"
-                                                        value={formData.phone}
-                                                        onChange={handleInputChange}
-                                                        className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-2xl focus:ring-0 focus:border-purple-400 focus:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm"
-                                                        placeholder="05XX XXX XX XX"
-                                                    />
-                                                </div>
-                                            </motion.div>
-
-                                            {/* Subject Dropdown - Required */}
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 20 }}
-                                                animate={{ opacity: isFormInView ? 1 : 0, y: isFormInView ? 0 : 20 }}
-                                                transition={{ duration: 0.6, delay: 0.8 }}
-                                            >
-                                                <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-3">
-                                                    İlgilendiğim Konu <span className="text-red-500">*</span>
-                                                </label>
-                                                <div className="relative">
-                                                    <Target className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                                    <select
-                                                        id="subject"
-                                                        name="subject"
-                                                        value={formData.subject}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                        className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-2xl focus:ring-0 focus:border-purple-400 focus:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm appearance-none cursor-pointer"
-                                                    >
-                                                        {subjectOptions.map((option, index) => (
-                                                            <option key={index} value={option.value} disabled={option.disabled}>
-                                                                {option.label}
-                                                            </option>
-                                                        ))}
-                                                    </select>
-                                                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                                                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                            </motion.div>
-
-                                            {/* Message - Required */}
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 20 }}
-                                                animate={{ opacity: isFormInView ? 1 : 0, y: isFormInView ? 0 : 20 }}
-                                                transition={{ duration: 0.6, delay: 0.9 }}
-                                            >
-                                                <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-3">
-                                                    Mesajınız <span className="text-red-500">*</span>
-                                                </label>
-                                                <div className="relative">
-                                                    <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-gray-400" />
-                                                    <textarea
-                                                        id="message"
-                                                        name="message"
-                                                        value={formData.message}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                        rows={5}
-                                                        className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-2xl focus:ring-0 focus:border-purple-400 focus:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm resize-none"
-                                                        placeholder="Projenizden veya talebinizden kısaca bahseder misiniz?"
-                                                    />
-                                                </div>
-                                            </motion.div>
+                                            {formFields.map((field) => (
+                                                <FormInput
+                                                    key={field.id}
+                                                    id={field.id}
+                                                    name={field.name}
+                                                    label={field.label}
+                                                    type={field.type}
+                                                    value={formData[field.name] || ''}
+                                                    onChange={handleInputChange}
+                                                    required={field.required}
+                                                    optional={field.optional}
+                                                    placeholder={field.placeholder}
+                                                    icon={field.icon}
+                                                    isFormInView={isFormInView}
+                                                    delay={field.delay}
+                                                    rows={field.rows}
+                                                    options={field.options}
+                                                />
+                                            ))}
 
                                             {/* Submit Button */}
                                             <motion.div
@@ -341,25 +289,38 @@ export default function ContactSection() {
                                             >
                                                 <motion.button
                                                     type="submit"
-                                                    disabled={isLoading}
-                                                    whileHover={{ scale: isLoading ? 1 : 1.02 }}
-                                                    whileTap={{ scale: isLoading ? 1 : 0.98 }}
-                                                    className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4 px-8 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                                                    disabled={formStatus === 'loading' || !isFormValid()} // Burada validation eklendi
+                                                    whileHover={{ scale: (formStatus === 'loading' || !isFormValid()) ? 1 : 1.02 }}
+                                                    whileTap={{ scale: (formStatus === 'loading' || !isFormValid()) ? 1 : 0.98 }}
+                                                    className={`w-full ${isFormValid()
+                                                            ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white'
+                                                            : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                                                        } py-4 lg:px-8 rounded-2xl font-semibold lg:text-lg text-base  shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed`}
                                                 >
-                                                    {isLoading ? (
+                                                    {formStatus === 'loading' ? (
                                                         <>
                                                             <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                                                             <span>Gönderiliyor...</span>
                                                         </>
                                                     ) : (
                                                         <>
-                                                            <span>Ücretsiz Görüşme Talep Et</span>
-                                                            <Send className="w-5 h-5" />
+                                                            <span>
+                                                                {isFormValid()
+                                                                    ? 'Ücretsiz Görüşme Talep Et'
+                                                                    : 'Lütfen Gerekli Alanları Doldurun'
+                                                                }
+                                                            </span>
+                                                            <Send className={`w-5 h-5 ${!isFormValid() ? 'opacity-50' : ''}`} />
                                                         </>
                                                     )}
                                                 </motion.button>
+
                                             </motion.div>
                                         </form>
+
+                                        {formStatus === 'error' && (
+                                            <p className="text-red-500 text-center mt-4 text-sm">{responseMessage}</p>
+                                        )}
                                     </>
                                 ) : (
                                     // Success State
@@ -371,7 +332,7 @@ export default function ContactSection() {
                                         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                                             <CheckCircle className="w-10 h-10 text-green-500" />
                                         </div>
-                                        <h3 className="text-2xl font-bold text-gray-900 mb-4">Mesajınız Alındı!</h3>
+                                        <h3 className="text-2xl font-bold text-gray-900 mb-4">{responseMessage}</h3>
                                         <p className="text-gray-600 mb-2">Teşekkürler! 24 saat içinde size geri dönüş yapacağız.</p>
                                         <p className="text-sm text-gray-500">Acil durumlar için: info@nebasoftware.com</p>
                                     </motion.div>
@@ -379,6 +340,7 @@ export default function ContactSection() {
                             </div>
                         </div>
                     </motion.div>
+
                 </div>
             </div>
         </section>

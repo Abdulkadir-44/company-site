@@ -1,3 +1,6 @@
+import { User, Mail, Phone, Target, MessageSquare } from "lucide-react";
+import {FormField} from "@/app/types/types";
+
 // Subject options
 const subjectOptions = [
     { value: "", label: "Lütfen bir konu seçin", disabled: true },
@@ -33,4 +36,59 @@ const whyNebaSoftware = [
     { step: "02", title: "Teklif & Planlama", desc: "Şeffaf fiyatlandırma ve net zaman planlaması sunuyoruz" },
     { step: "03", title: "Geliştirme", desc: "Modern teknolojilerle hızlı ve kaliteli geliştirme yapıyoruz" }
 ];
-export { subjectOptions, floatingElementsData,whyNebaSoftware };
+
+const formFields: FormField[] = [
+  {
+    id: "fullName",
+    name: "fullName",
+    label: "Ad Soyad",
+    type: "text",
+    required: true,
+    placeholder: "Adınız ve soyadınız",
+    icon: User,
+    delay: 0.5
+  },
+  {
+    id: "email",
+    name: "email", 
+    label: "E-posta Adresi",
+    type: "email",
+    required: true,
+    placeholder: "ornek@email.com",
+    icon: Mail,
+    delay: 0.6
+  },
+  {
+    id: "phone",
+    name: "phone",
+    label: "Telefon Numarası", 
+    type: "tel",
+    optional: true,
+    placeholder: "05XX XXX XX XX",
+    icon: Phone,
+    delay: 0.7
+  },
+  {
+    id: "subject",
+    name: "subject",
+    label: "İlgilendiğim Konu",
+    type: "select",
+    required: true,
+    icon: Target,
+    delay: 0.8,
+    options: subjectOptions 
+  },
+  {
+    id: "message", 
+    name: "message",
+    label: "Mesajınız",
+    type: "textarea",
+    required: true,
+    placeholder: "Projenizden veya talebinizden kısaca bahseder misiniz?",
+    icon: MessageSquare,
+    delay: 0.9,
+    rows: 5
+  }
+];
+
+export { subjectOptions, floatingElementsData,whyNebaSoftware ,formFields};

@@ -23,7 +23,7 @@ const statsData = [
     {
         id: 1,
         icon: Users,
-        number: "50+",
+        number: "6",
         title: "Mutlu Müşteri",
         bgGradient: "bg-gradient-to-br from-purple-500 to-purple-700",
         textColor : "text-purple-700/80"
@@ -31,7 +31,7 @@ const statsData = [
     {
         id: 2,
         icon: Rocket,
-        number: "100+",
+        number: "16",
         title: "Tamamlanan Proje",
         bgGradient: "bg-gradient-to-br from-blue-500 to-blue-700",
         textColor : "text-blue-700/80"
@@ -39,7 +39,7 @@ const statsData = [
     {
         id: 3,
         icon: Star,
-        number: "5+",
+        number: "5",
         title: "Yıllık Deneyim",
         bgGradient: "bg-gradient-to-br from-green-500 to-green-700",
         textColor : "text-green-700/80"

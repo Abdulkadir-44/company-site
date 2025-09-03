@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import ServiceCard from "../ui/ServiceCard";
 import { servicesData } from "../../lib/data/servicesSectionData";
-
+import Link from "next/link";
 
 
 export default function ServicesSection() {
@@ -19,7 +19,7 @@ export default function ServicesSection() {
             <div className="absolute top-0 right-0 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-72 h-72 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '4s' }}></div>
 
-            <div className="max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto relative">
+            <div className="max-w-7xl sm:px-6 lg:px-8 mx-auto relative">
 
                 {/* Section Header */}
                 <motion.div
@@ -85,12 +85,16 @@ export default function ServicesSection() {
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.6 }}
-                        whileHover={{ scale: 1.05, y: -2 }}
+                        // transition={{ duration: 0.6, delay: 0.6 }}
+                        whileHover={{ scale: 1.05, y: -2}}
                         whileTap={{ scale: 0.95 }}
                         className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center space-x-2"
                     >
-                        <span>İletişime Geçin</span>
+                        <Link
+                            href="#contact"
+                        >
+                            İletişime Geç
+                        </Link>
                         <ArrowRight className="w-5 h-5" />
                     </motion.button>
                 </motion.div>

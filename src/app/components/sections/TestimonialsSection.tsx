@@ -4,49 +4,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Quote } from "lucide-react";
 import Image from "next/image";
+import {testimonials} from "@/app/lib/data/testimonalSectionData"
 
-interface Testimonial {
-    id: number;
-    quote: string;
-    name: string;
-    title: string;
-    image: string;
-}
-
-const testimonials: Testimonial[] = [
-    {
-        id: 1,
-        quote:
-            "Bu platform sayesinde iş akışlarımız inanılmaz hızlandı. Analitik araçları ve kullanıcı dostu arayüzü sayesinde verimliliğimiz %40 arttı. Kesinlikle tavsiye ederim!",
-        name: "Ayşe Yılmaz",
-        title: "Proje Yöneticisi, TechNova",
-        image: "/bg.jpeg",
-    },
-    {
-        id: 2,
-        quote:
-            "Sundukları destek ve çözüm odaklı yaklaşımları harika. Karşılaştığımız her sorunda anında yanımızda oldular. Gerçek bir iş ortağı gibi çalışıyorlar.",
-        name: "Mehmet Kaya",
-        title: "CEO, Innovate Solutions",
-        image: "/bg.jpeg",
-    },
-    {
-        id: 3,
-        quote:
-            "Ürünün esnekliği ve özelleştirme seçenekleri, kendi ihtiyaçlarımıza mükemmel şekilde uyum sağlamamıza olanak tanıdı. Başka bir çözüm düşünemiyorum.",
-        name: "Fatma Demir",
-        title: "Pazarlama Direktörü, Creative Minds",
-        image: "/bg.jpeg",
-    },
-    {
-        id: 4,
-        quote:
-            "Mobil uyumluluğu ve hızı sayesinde saha ekibimiz her yerden verilere anlık olarak ulaşabiliyor. Bu, karar alma süreçlerimizi kökten değiştirdi.",
-        name: "Ali Vural",
-        title: "Saha Operasyonları Lideri, Global Logistics",
-        image: "/bg.jpeg",
-    },
-];
 
 const SLIDE_INTERVAL = 7000;
 const ANIMATION_DURATION = 1.0;
@@ -118,7 +77,7 @@ const TestimonialsSection = () => {
                 priority
                 className="absolute inset-0 object-cover w-full h-full opacity-30 select-none"
             />
-            <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+            <div className="relative max-w-6xl mx-auto  sm:px-6 lg:px-8 z-10">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
                         Müşterilerimiz Bizim İçin Ne Diyor?
@@ -132,7 +91,7 @@ const TestimonialsSection = () => {
                         {testimonials.map((testimonial, index) => (
                             <motion.div
                                 key={testimonial.id}
-                                className="absolute w-[90%] max-w-lg cursor-pointer"
+                                className="absolute w-[90%] max-w-lg "
                                 initial={getCardStyle(index)}
                                 animate={getCardStyle(index)}
                                 transition={{
