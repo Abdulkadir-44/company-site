@@ -61,11 +61,11 @@ export default function Footer() {
                                     Hizmetler
                                 </Link>
                             </li>
-                             <li>
+                             {/* <li>
                                 <Link href="/projects" className="hover:text-white transition">
                                     Projeler
                                 </Link>
-                            </li>
+                            </li> */}
                             <li>
                                 <Link href="#contact" className="hover:text-white transition">
                                     İletişim
@@ -86,7 +86,7 @@ export default function Footer() {
                             </li>
                             <li className="flex items-center gap-3">
                                 <Phone className="w-5 h-5 text-purple-400" />
-                                <span>+90 555 123 45 67</span>
+                                <span>+90 546 601 57 38</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Mail className="w-5 h-5 text-purple-400" />
@@ -99,8 +99,9 @@ export default function Footer() {
                     {/* Social Links */}
                     <div>
                         <h3 className="text-lg font-semibold mb-4">Bizi Takip Edin</h3>
-                        <div className="flex space-x-4">
-                            {/* Facebook */}
+                        Yakında sosyal medya hesaplarımız açılacaktır.
+                        {/* <div className="flex space-x-4">
+                          
                             <Link
                                 href="#"
                                 className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white transition-all duration-300 hover:bg-blue-700 hover:scale-110"
@@ -108,7 +109,7 @@ export default function Footer() {
                                 <Facebook className="w-5 h-5" />
                             </Link>
 
-                            {/* Twitter */}
+                           
                             <Link
                                 href="#"
                                 className="w-10 h-10 flex items-center justify-center rounded-full bg-sky-500 text-white transition-all duration-300 hover:bg-sky-600 hover:scale-110"
@@ -116,7 +117,7 @@ export default function Footer() {
                                 <Twitter className="w-5 h-5" />
                             </Link>
 
-                            {/* Instagram */}
+                            
                             <Link
                                 href="#"
                                 className="w-10 h-10 flex items-center justify-center rounded-full bg-pink-500 text-white transition-all duration-300 hover:bg-pink-600 hover:scale-110"
@@ -124,14 +125,14 @@ export default function Footer() {
                                 <Instagram className="w-5 h-5" />
                             </Link>
 
-                            {/* LinkedIn */}
+                            
                             <Link
                                 href="#"
                                 className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-700 text-white transition-all duration-300 hover:bg-blue-800 hover:scale-110"
                             >
                                 <Linkedin className="w-5 h-5" />
                             </Link>
-                        </div>
+                        </div> */}
                     </div>
 
 

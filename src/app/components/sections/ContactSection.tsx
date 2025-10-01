@@ -193,7 +193,7 @@ export default function ContactSection() {
                             <ul className="space-y-4 text-gray-600">
                                 <li className="flex items-center gap-3">
                                     <Phone className="w-5 h-5 text-green-500" />
-                                    <span>+90 555 123 45 67</span>
+                                    <span>+90 546 601 57 38</span>
                                 </li>
                                 <li className="flex items-center gap-3">
                                     <Mail className="w-5 h-5 text-orange-500" />

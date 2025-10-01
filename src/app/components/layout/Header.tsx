@@ -107,9 +107,9 @@ export default function Header() {
                             <Link href="#services" className={navLinkClasses}>
                                 Hizmetler
                             </Link>
-                            <Link href="/projects" className={navLinkClasses}>
+                            {/* <Link href="/projects" className={navLinkClasses}>
                                 Projeler
-                            </Link>
+                            </Link> */}
                             <Link href="#about" className={navLinkClasses}>
                                 Hakkımızda
                             </Link>
@@ -203,13 +203,13 @@ export default function Header() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.15, duration: 0.3 }}
                                 >
-                                    <Link 
+                                    {/* <Link 
                                         href="/projects" 
                                         className={mobileNavLinkClasses}
                                         onClick={toggleMobileMenu}
                                     >
                                         Projeler
-                                    </Link>
+                                    </Link> */}
                                 </motion.div>
                                 
                                 <motion.div

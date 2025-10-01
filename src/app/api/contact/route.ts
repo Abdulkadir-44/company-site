@@ -1,7 +1,7 @@
 // app/api/contact/route.ts
 
 import { NextResponse } from 'next/server';
-import prisma from '@/app/lib/prisma/prisma'; // Önceki adımda oluşturduğumuz merkezi prisma'yı import ediyoruz.
+import prisma from '@/app/lib/prisma/prisma'; 
 import { z } from 'zod';
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
@@ -18,7 +18,7 @@ const ratelimit = new Ratelimit({
   analytics: true,
 });
 
-// --- GÜNCELLEME 1: Zod Şemasına Kullanıcı Dostu Hata Mesajları Ekleme ---
+
 const contactFormSchema = z.object({
   fullName: z.string()
     .min(2, { message: "Ad Soyad alanı en az 2 karakter olmalıdır." })
