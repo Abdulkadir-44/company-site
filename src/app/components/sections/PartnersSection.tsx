@@ -1,11 +1,15 @@
 "use client";
 
+import { useRef } from "react";
+import { useInView } from "framer-motion";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { partners, recentProjects, statsData } from "../../lib/data/partnersSectionData";
 
 
 export default function PartnersSection() {
+    const headerRef = useRef(null);
+    const isHeaderInView = useInView(headerRef, { once: true });
     return (
         <section className="py-12 sm:py-16 md:py-20 lg:py-14 bg-gray-100">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,52 +19,28 @@ export default function PartnersSection() {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="relative mb-12 sm:mb-16 md:mb-20"
+                    className="relative mb-12 sm:mb-16 md:mb-12"
                 >
-                    <div className="bg-gray-100 rounded-2xl py-8  overflow-hidden">
-                        {/* Gradient Overlays */}
-                        <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-r from-gray-100 to-transparent z-10 pointer-events-none"></div>
-                        <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-l from-gray-100 to-transparent z-10 pointer-events-none"></div>
-
-                        {/* Scrolling Logos */}
-                        <div className="flex overflow-hidden">
-                            <div className="flex animate-infinite-scroll space-x-8 sm:space-x-12 md:space-x-16 min-w-max items-center">
-                                {partners.map((partner) => (
-                                    <div
-                                        key={`first-${partner.id}`}
-                                        className="flex-shrink-0 flex items-center space-x-3 px-4 py-3 hover:bg-gray-100/50 rounded-xl transition-all duration-300 group"
-                                    >
-                                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-400 rounded-lg flex items-center justify-center group-hover:bg-gray-500 transition-colors duration-300">
-                                            <span className="text-white font-bold text-xs sm:text-sm">
-                                                {partner.name.substring(0, 2)}
-                                            </span>
-                                        </div>
-                                        <span className="text-gray-500 font-medium text-sm sm:text-base md:text-lg whitespace-nowrap group-hover:text-gray-600 transition-colors duration-300">
-                                            {partner.name}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="flex animate-infinite-scroll space-x-8 sm:space-x-12 md:space-x-16 min-w-max items-center ml-8 sm:ml-12 md:ml-16">
-                                {partners.map((partner) => (
-                                    <div
-                                        key={`second-${partner.id}`}
-                                        className="flex-shrink-0 flex items-center space-x-3 px-4 py-3 hover:bg-gray-100/50 rounded-xl transition-all duration-300 group"
-                                    >
-                                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-400 rounded-lg flex items-center justify-center group-hover:bg-gray-500 transition-colors duration-300">
-                                            <span className="text-white font-bold text-xs sm:text-sm">
-                                                {partner.name.substring(0, 2)}
-                                            </span>
-                                        </div>
-                                        <span className="text-gray-500 font-medium text-sm sm:text-base md:text-lg whitespace-nowrap group-hover:text-gray-600 transition-colors duration-300">
-                                            {partner.name}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
+                    <motion.div
+                        ref={headerRef}
+                        initial={{ opacity: 0, y: -50 }}
+                        animate={{ opacity: isHeaderInView ? 1 : 0, y: isHeaderInView ? 0 : -50 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="text-center mb-16 lg:mb-12"
+                    >
+                        <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full border border-purple-200 mb-6">
+                            <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                            <span className="text-purple-700 font-medium text-sm">Başlangıç Noktamız</span>
                         </div>
-                    </div>
+
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                            Bugünün Fikri <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Yarının Standartları</span>
+                        </h2>
+
+                        <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                            Yeni nesil yazılım çözümleriyle iş dünyasına taze bir bakış açısı getirmek istiyoruz.Genç ama kararlı ekibimizle, işinizi  büyütmeye hazırız.
+                        </p>
+                    </motion.div>
                 </motion.div>
 
                 {/* Main Card */}
@@ -96,10 +76,7 @@ export default function PartnersSection() {
                             </h4>
 
                             <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl">
-                                NEBASOFTWARE olarak, sadece bir yazılım şirketi değiliz—biz yenilikçiler,
-                                problem çözücüler ve teknik tutkusuyuz. Modern, temiz ve ölçeklenebilir
-                                yazılımlar ile işletmelerin sürekli gelişen dijital ortamda öne çıkmasına
-                                yardımcı ediyoruz.
+                                Biz NEBASOFTWARE olarak sadece yazılım üreten bir ekip değiliz; sorunları keşfetmeyi ve onları basit, anlaşılır çözümlere dönüştürmeyi seviyoruz. Her satır kodu bir ürün değil, bir deneyim olarak görüyoruz. Amacımız; işletmelerin karmaşık süreçlerini kolaylaştırmak, zaman kazandırmak ve işleri daha verimli hale getirmek. Bizim için teknoloji yeni ya da eski değil; doğru sorunu doğru şekilde çözebildiği sürece değerlidir. Bu yüzden odak noktamız hep aynı: güvenilir, anlaşılır ve gerçekten işe yarayan yazılımlar geliştirmek.
                             </p>
 
                             <div className="flex flex-wrap gap-3">
@@ -116,34 +93,8 @@ export default function PartnersSection() {
                         </div>
 
                         {/* Right Scroll Area */}
-                        <div className="lg:col-span-1">
-                            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10">
-                                <h5 className="text-white text-lg font-semibold mb-4 flex items-center">
-                                    <div className="w-2 h-2 bg-green-400 rounded-full mr-3 animate-pulse"></div>
-                                    Son Projelerimiz
-                                </h5>
-
-                                <div className="space-y-4 max-h-64 overflow-y-auto pr-3 custom-scrollbar">
-                                    {recentProjects.concat(recentProjects).map((project, index) => (
-                                        <div key={index} className="flex items-center space-x-3 p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all duration-300 group">
-                                            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                                                <span className="text-white font-bold text-xs">
-                                                    {project.client.substring(0, 2)}
-                                                </span>
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <p className="text-white text-sm font-medium truncate group-hover:text-purple-300 transition-colors">
-                                                    {project.client}
-                                                </p>
-                                                <p className="text-gray-400 text-xs">
-                                                    {project.type}
-                                                </p>
-                                            </div>
-                                            <div className="w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                        <div className="relative w-full h-full">
+                            <Image src="/bg-3.jpeg" alt="Background" fill className="object-cover rounded-2xl" loading="lazy" />
                         </div>
                     </div>
                 </motion.div>

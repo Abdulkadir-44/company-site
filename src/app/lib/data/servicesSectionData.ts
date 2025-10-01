@@ -20,7 +20,7 @@ export const servicesData = [
         gradient: "from-purple-500 to-pink-500",
         bgColor: "bg-purple-50",
         borderColor: "border-purple-200",
-        tags: ["React", "Next.js", "Tailwind"]
+        tags: ["React", "Next.js", "Tailwind","Bootstrap","Headless UI","Canva","Vercel","GitHub","Docker" ]
     },
     {
         id: 2,
@@ -39,7 +39,7 @@ export const servicesData = [
         gradient: "from-blue-500 to-cyan-500",
         bgColor: "bg-blue-50",
         borderColor: "border-blue-200",
-        tags: ["Electron", "Tauri", "Cross-Platform"]
+        tags: ["Electron", "Python"]
     },
     {
         id: 3,
@@ -59,6 +59,6 @@ export const servicesData = [
         gradient: "from-green-500 to-emerald-500",
         bgColor: "bg-green-50",
         borderColor: "border-green-200",
-        tags: ["AWS", "Docker", "Kubernetes"]
+        tags: ["AWS", "Docker", "Kubernetes","CI/CD","GitHub Actions"]
     },
 ];

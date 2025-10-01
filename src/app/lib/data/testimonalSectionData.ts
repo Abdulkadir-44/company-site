@@ -4,17 +4,17 @@ export const testimonials: Testimonial[] = [
     {
         id: 1,
         quote:
-            "Bu platform sayesinde iş akışlarımız inanılmaz hızlandı. Analitik araçları ve kullanıcı dostu arayüzü sayesinde verimliliğimiz %40 arttı. Kesinlikle tavsiye ederim!",
-        name: "Ayşe Yılmaz",
-        title: "Proje Yöneticisi, TechNova",
+            "Bir fikrim vardı, fakat nasıl hayata geçireceğimi bilmiyordum. NEBASOFTWARE ekibi fikrimi dinleyip profesyonel bir uygulamaya dönüştürdü. Tasarımıyla, pratik kullanımıyla ve işlevselliğiyle gerçekten memnun kaldım",
+        name: "Çağrı P.",
+        title: "Diyetisyen, Online Diyetisyen Sistemi",
         image: "/bg.jpeg",
     },
     {
         id: 2,
         quote:
-            "Sundukları destek ve çözüm odaklı yaklaşımları harika. Karşılaştığımız her sorunda anında yanımızda oldular. Gerçek bir iş ortağı gibi çalışıyorlar.",
-        name: "Mehmet Kaya",
-        title: "CEO, Innovate Solutions",
+            "İşimle ilgili bir problemim vardı,bunu çözmek için web tabanlı çözümler vardı ama ben bilgisayarımdan çalışan bir uygulama istiyordum. NEBASOFTWARE ile gerekli şartlar konuşulup yerine getirildikten sonra benim ihtiyacımı olan masaüstü uygulamaya yaptılar.Sonuç gerçekten harika oldu.",
+        name: "Ümit D.",
+        title: "Biyoloji Öğretmeni",
         image: "/bg.jpeg",
     },
     {
@@ -23,14 +23,6 @@ export const testimonials: Testimonial[] = [
             "Ürünün esnekliği ve özelleştirme seçenekleri, kendi ihtiyaçlarımıza mükemmel şekilde uyum sağlamamıza olanak tanıdı. Başka bir çözüm düşünemiyorum.",
         name: "Fatma Demir",
         title: "Pazarlama Direktörü, Creative Minds",
-        image: "/bg.jpeg",
-    },
-    {
-        id: 4,
-        quote:
-            "Mobil uyumluluğu ve hızı sayesinde saha ekibimiz her yerden verilere anlık olarak ulaşabiliyor. Bu, karar alma süreçlerimizi kökten değiştirdi.",
-        name: "Ali Vural",
-        title: "Saha Operasyonları Lideri, Global Logistics",
         image: "/bg.jpeg",
     },
 ];

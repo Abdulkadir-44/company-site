@@ -20,7 +20,7 @@ const timelineData = [
     {
         year: "2025+",
         title: "Büyüme & İnovasyon",
-        description: "Kuruluşun ardından ekibimizi genişleterek daha büyük ve kapsamlı projelere imza atmaya başladık. Teknoloji trendlerini yakından takip ederek yapay zeka, bulut tabanlı çözümler ve modern frontend teknolojileri gibi alanlarda inovatif ürünler geliştiriyoruz. Amacımız, sadece yazılım geliştirmek değil; müşterilerimizin iş süreçlerini daha verimli ve geleceğe hazır hale getiren çözümler sunmak.",
+        description: "Önümüzdeki dönemde ekibimizi genişletmeyi ve daha kapsamlı projelere adım atmayı hedefliyoruz. Teknoloji trendlerini yakından takip ederek yapay zeka, bulut çözümleri ve modern web teknolojileri üzerine odaklanacağız. Hedefimiz, müşterilerimize sadece yazılım değil; işlerini kolaylaştıracak, zamandan kazandıracak ve geleceğe uyum sağlayacak çözümler sunmak.",
         icon: Zap,
         color: "from-green-500 to-emerald-500",
         headColor: "text-green-500"

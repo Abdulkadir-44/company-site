@@ -23,7 +23,7 @@ const statsData = [
     {
         id: 1,
         icon: Users,
-        number: "6",
+        number: "3",
         title: "Mutlu Müşteri",
         bgGradient: "bg-gradient-to-br from-purple-500 to-purple-700",
         textColor : "text-purple-700/80"
@@ -31,7 +31,7 @@ const statsData = [
     {
         id: 2,
         icon: Rocket,
-        number: "16",
+        number: "8",
         title: "Tamamlanan Proje",
         bgGradient: "bg-gradient-to-br from-blue-500 to-blue-700",
         textColor : "text-blue-700/80"
